@@ -2,6 +2,10 @@
 
 - homepage: http://karaf.apache.org/
 
+supported versions:
+- 3.0.x
+- 4.0.x
+
 ## Usage
 ```java
 final KarafConfiguration conf = KarafConfiguration.builder().directory($KARAF_HOME).xmx("2g").build();
