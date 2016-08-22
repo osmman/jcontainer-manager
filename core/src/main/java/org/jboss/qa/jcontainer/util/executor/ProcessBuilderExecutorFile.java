@@ -60,7 +60,6 @@ public class ProcessBuilderExecutorFile extends ProcessBuilderExecutor {
 
 		@Override
 		protected void close() {
-			//this class is not responsible to open outWriter, so don't close it
 			ExecutorUtil.closeCloseable(outWriter);
 			outWriter = null;
 		}

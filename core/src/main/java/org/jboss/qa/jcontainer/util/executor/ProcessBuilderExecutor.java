@@ -101,6 +101,7 @@ public abstract class ProcessBuilderExecutor {
 				try {
 					this.executorThread.processSyncStart.wait(timeout);
 				} catch (InterruptedException e) {
+					log.debug(e.getMessage(), e);
 					Thread.currentThread().interrupt();
 				}
 			}

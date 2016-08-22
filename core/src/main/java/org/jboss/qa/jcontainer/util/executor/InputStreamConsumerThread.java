@@ -70,6 +70,7 @@ public class InputStreamConsumerThread extends Thread {
 			if (!isIoExceptionCausedByInterruptedProcess(e)) {
 				log.error("Problem with consuming InputStream.", e);
 			}
+			log.debug(e.getMessage(), e);
 			//in case of writing to output failed, consume rest of the input (input consumption is priority)
 			consumeRestOfInput();
 		}
@@ -94,6 +95,8 @@ public class InputStreamConsumerThread extends Thread {
 		} catch (final Exception e) {
 			if (!isIoExceptionCausedByInterruptedProcess(e)) {
 				log.error("Problem with consuming rest of InputStream.", e);
+			} else {
+				log.debug(e.getMessage(), e);
 			}
 		}
 	}

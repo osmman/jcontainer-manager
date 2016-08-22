@@ -19,6 +19,9 @@ import java.io.Closeable;
 import java.io.PrintWriter;
 import java.io.Writer;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public final class ExecutorUtil {
 
 	private ExecutorUtil() {
@@ -39,7 +42,7 @@ public final class ExecutorUtil {
 			try {
 				closeable.close();
 			} catch (final Exception e) {
-				//ignore
+				log.error(e.getMessage(), e);
 			}
 		}
 	}
