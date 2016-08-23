@@ -22,8 +22,10 @@ import org.apache.commons.lang3.SystemUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
+import org.junit.rules.Timeout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,28 +37,29 @@ public class AbstractProcessBuilderExecutorTest {
 
 	public static final String EXPECTED_RESULT = OUTPUT_TEXT + "\n" + ERROR_TEXT + "\n";
 
-	protected static ProcessBuilder processBuilder;
-
-	private TemporaryFolder temporaryFolder = new TemporaryFolder();
+	protected static List<String> commands;
 
 	@Rule
-	public TemporaryFolder getTemporaryFolder() {
-		return temporaryFolder;
-	}
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	@Rule
+	public Timeout globalTimeout = Timeout.seconds(5);
 
 	@BeforeClass
 	public static void setUpClass() {
-		final ArrayList<String> cmd = new ArrayList<>();
+		commands = new ArrayList<>();
 		if (SystemUtils.IS_OS_WINDOWS) {
-			cmd.add("cmd");
-			cmd.add("/c");
-			cmd.add(getFile("src", "test", "resources", "script.bat").getAbsolutePath());
+			commands.add("cmd");
+			commands.add("/c");
+			commands.add(getFile("src", "test", "resources", "script.bat").getAbsolutePath());
 		} else {
-			cmd.add("bash");
-			cmd.add("-c");
-			cmd.add(getFile("src", "test", "resources", "script.sh").getAbsolutePath());
+			commands.add("bash");
+			commands.add("-c");
+			commands.add(getFile("src", "test", "resources", "script.sh").getAbsolutePath());
 		}
-		processBuilder = new ProcessBuilder(cmd);
-		log.debug("Build command: {}", cmd);
+	}
+
+	public static ProcessBuilder createProcessBuilder() {
+		return new ProcessBuilder(commands);
 	}
 }
